@@ -37,42 +37,53 @@ Use a Developer Command Prompt and run:
 mkdir out
 cd out
 cmake .. -G "Ninja"
-cmake --build .```
+cmake --build .
+```
 
+## Execution Scripts
 
-Execution Scripts
-run_basic.bat
+### `run_basic.bat`
 
-This script creates the out directory if it does not already exist, builds the project using CMake and Ninja, executes the model using cyclic_config.json for 50 simulation time units, and copies the generated output log to logs/cyclic_basic_log.csv.
+This script creates the `out` directory if it does not already exist, builds the project using CMake and Ninja, executes the model using `cyclic_config.json` for 50 simulation time units, and copies the generated output log to `logs/cyclic_basic_log.csv`.
 
-run_wrapped.bat
+### `run_wrapped.bat`
 
-This script creates the out directory if needed, builds the project, executes the model using cyclic_config_wrapped.json for 50 simulation time units, and stores the resulting output log in logs/cyclic_wrapped_log.csv.
+This script creates the `out` directory if needed, builds the project, executes the model using `cyclic_config_wrapped.json` for 50 simulation time units, and stores the resulting output log in `logs/cyclic_wrapped_log.csv`.
 
-run_stripes.bat
+### `run_stripes.bat`
 
-This script creates the out directory if needed, builds the project, executes the model using cyclic_config_stripes.json for 50 simulation time units, and stores the resulting output log in logs/cyclic_stripes_log.csv.
+This script creates the `out` directory if needed, builds the project, executes the model using `cyclic_config_stripes.json` for 50 simulation time units, and stores the resulting output log in `logs/cyclic_stripes_log.csv`.
 
-Manual Execution
+## Manual Execution
 
-After building, the model can also be executed manually from the out directory.
+After building, the model can also be executed manually from the `out` directory.
 
-Basic experiment
+### Basic experiment
+
+```bat
 main_cyclic.exe ..\cyclic_config.json 50
-Wrapped experiment
+```
+
+### Wrapped experiment
+
+```bat
 main_cyclic.exe ..\cyclic_config_wrapped.json 50
-Stripes experiment
+```
+
+### Stripes experiment
+
+```bat
 main_cyclic.exe ..\cyclic_config_stripes.json 50
-Output Files
+```
+
+## Output Files
 
 The project produces:
 
-CSV log files in the logs/ folder
+- CSV log files in the `logs/` folder
+- visualization images and animation in `visualization_output/`
+- video output in the `videos/` folder
 
-visualization images and animation in visualization_output/
-
-video output in the videos/ folder
-
-Notes
+## Notes
 
 This project was developed and tested on Windows using Cadmium v2, CMake, and Ninja.
