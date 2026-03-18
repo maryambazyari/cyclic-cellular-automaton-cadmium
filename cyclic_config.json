@@ -1,0 +1,34 @@
+{
+  "scenario": {
+    "shape": [20, 20],
+    "origin": [0, 0],
+    "wrapped": false
+  },
+  "cells": {
+    "default": {
+      "delay": "inertial",
+      "cell_type": "cyclic",
+      "state": { "phase": 0 },
+      "neighborhood": [
+        { "type": "moore", "range": 1 }
+      ]
+    },
+
+    "phase1_patch": {
+      "state": { "phase": 1 },
+      "cell_map": [
+        [8,8], [8,9], [8,10],
+        [9,8], [9,9], [9,10],
+        [10,8], [10,9], [10,10]
+      ]
+    },
+
+    "phase2_patch": {
+      "state": { "phase": 2 },
+      "cell_map": [
+        [4,4], [4,5], [5,4], [5,5],
+        [14,14], [14,15], [15,14], [15,15]
+      ]
+    }
+  }
+}
