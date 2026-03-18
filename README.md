@@ -37,7 +37,9 @@ Use a Developer Command Prompt and run:
 mkdir out
 cd out
 cmake .. -G "Ninja"
-cmake --build .
+cmake --build .```
+
+
 Execution Scripts
 run_basic.bat
 
