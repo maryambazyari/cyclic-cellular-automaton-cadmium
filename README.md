@@ -21,7 +21,7 @@ This repository contains a Cell-DEVS implementation of a cyclic cellular automat
 
 ## External Dependencies
 
-This project requires external libraries/frameworks that are **not included in this repository**:
+This project requires external libraries/frameworks that are not included in this repository:
 
 - Cadmium v2
 - nlohmann/json
