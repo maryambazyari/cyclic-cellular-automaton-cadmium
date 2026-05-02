@@ -28,38 +28,53 @@ This repository contains a Cell-DEVS implementation of a cyclic cellular automat
 
 ## Dependencies
 
-This repository already includes the required header dependencies for:
+This repository includes the required local header dependencies for:
 
-- Cadmium
-- Boost
-- nlohmann/json
+- `nlohmann/json`
+- bundled Cadmium headers
+- bundled Boost headers
 
-To build and run the project, the user only needs:
+To build and run the project, the user needs:
 
 - CMake 3.16 or newer
 - Ninja or another supported build generator
 - A C++17 compiler
+- valid Cadmium and Boost include paths passed at CMake configuration time
 
-## Build on Linux
+## Build Instructions
 
-Run the following commands from the repository root:
+From the repository root:
 
 ```bash
 mkdir -p out
 cd out
-cmake -G Ninja ..
+cmake -G Ninja .. -DCADMIUM_V2_DIR=$HOME/assignment/IndoorHumiditySystem-DEVS/external/cadmium/include -DBOOST_DIR=$HOME/smart-fridge-temperature-control-devs/external/boost
 cmake --build .
+cd ..
 ```
 
-## Build on Windows
+After building, the executable will be available at:
 
-Use a Developer Command Prompt and run:
+```bash
+./out/main_cyclic
+```
 
-```bat
-mkdir out
-cd out
-cmake .. -G "Ninja"
-cmake --build .
+To run the basic experiment:
+
+```bash
+./out/main_cyclic ./cyclic_config.json 50
+```
+
+To run the wrapped-boundary experiment:
+
+```bash
+./out/main_cyclic ./cyclic_config_wrapped.json 50
+```
+
+To run the stripe initialization experiment:
+
+```bash
+./out/main_cyclic ./cyclic_config_stripes.json 50
 ```
 
 ## Execution Scripts
@@ -88,26 +103,6 @@ This Linux script removes any previous `out` directory, rebuilds the project usi
 
 This Linux script removes any previous `out` directory, rebuilds the project using CMake and Ninja, executes the model using `cyclic_config_stripes.json` for 50 simulation time units, and copies the generated output log to `logs/cyclic_stripes_log.csv`.
 
-## Manual Execution
-
-After building, the model can also be executed manually from the `out` directory.
-
-### Linux
-
-```bash
-./main_cyclic ../cyclic_config.json 50
-./main_cyclic ../cyclic_config_wrapped.json 50
-./main_cyclic ../cyclic_config_stripes.json 50
-```
-
-### Windows
-
-```bat
-main_cyclic.exe ..\cyclic_config.json 50
-main_cyclic.exe ..\cyclic_config_wrapped.json 50
-main_cyclic.exe ..\cyclic_config_stripes.json 50
-```
-
 ## Output Files
 
 The project produces:
@@ -116,6 +111,12 @@ The project produces:
 - visualization images and animation in `visualization_output/`
 - video output in the `videos/` folder
 
+## Visualization and Video
+
+The visualization outputs were generated from the simulation log files after running the model. Representative snapshots were saved in `visualization_output/`, and an animated GIF was created to show the temporal evolution of the cyclic cellular automaton.
+
+A video file was then prepared from the visualization output by recording the animation playback and saving it in the `videos/` folder. This provides a video version of the simulation results for submission and presentation.
+
 ## Notes
 
-This project was successfully built and executed on the remote environment after bundling the required Cadmium and Boost headers inside the repository and correcting the configuration files for the current Cadmium-based implementation.
+This project was successfully built and executed on the remote environment and on the local machine using explicit Cadmium and Boost include paths during CMake configuration. The configuration files were also corrected to match the expected scenario format of the current implementation.
