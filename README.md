@@ -21,19 +21,24 @@ This repository contains a Cell-DEVS implementation of a cyclic cellular automat
 - `visualization_output/`: generated snapshots and GIF
 - `videos/`: simulation video
 - `external/nlohmann/json.hpp`: bundled JSON single-header dependency
+- `external/cadmium_v2/`: bundled Cadmium headers
+- `external/boost/`: bundled Boost headers
 - `cyclic_cellular_automaton_report.pdf`: final report
+- `DEVSmodelsForm.pdf`: submission form
 
-## External Dependencies
+## Dependencies
 
-This project requires the following external tools and libraries:
+This repository already includes the required header dependencies for:
 
 - Cadmium
-- Boost headers
+- Boost
+- nlohmann/json
+
+To build and run the project, the user only needs:
+
 - CMake 3.16 or newer
 - Ninja or another supported build generator
 - A C++17 compiler
-
-The repository already includes `nlohmann/json` as a local header dependency in `external/nlohmann/json.hpp`.
 
 ## Build on Linux
 
@@ -42,22 +47,7 @@ Run the following commands from the repository root:
 ```bash
 mkdir -p out
 cd out
-cmake -G Ninja \
-  -DCADMIUM_V2_DIR=/path/to/cadmium/include \
-  -DBOOST_DIR=/path/to/boost \
-  ..
-cmake --build .
-```
-
-### Example build command on the remote environment
-
-```bash
-mkdir -p out
-cd out
-cmake -G Ninja \
-  -DCADMIUM_V2_DIR=/home/Bazyari/cadmium/include \
-  -DBOOST_DIR=/home/Bazyari/boost_full \
-  ..
+cmake -G Ninja ..
 cmake --build .
 ```
 
@@ -68,9 +58,7 @@ Use a Developer Command Prompt and run:
 ```bat
 mkdir out
 cd out
-cmake .. -G "Ninja" ^
-  -DCADMIUM_V2_DIR="path\to\cadmium\include" ^
-  -DBOOST_DIR="path\to\boost"
+cmake .. -G "Ninja"
 cmake --build .
 ```
 
@@ -130,4 +118,4 @@ The project produces:
 
 ## Notes
 
-This project was updated to build and run successfully in the remote environment using Cadmium and Boost paths supplied at CMake configuration time.
+This project was successfully built and executed on the remote environment after bundling the required Cadmium and Boost headers inside the repository and correcting the configuration files for the current Cadmium-based implementation.
