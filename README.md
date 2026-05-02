@@ -46,11 +46,14 @@ To build and run the project, the user needs:
 From the repository root:
 
 ```bash
-mkdir -p out
+cd ~/cyclic-cellular-automaton-cadmium
+rm -rf out
+mkdir out
 cd out
 cmake -G Ninja .. -DCADMIUM_V2_DIR=$HOME/assignment/IndoorHumiditySystem-DEVS/external/cadmium/include -DBOOST_DIR=$HOME/smart-fridge-temperature-control-devs/external/boost
 cmake --build .
-cd ..
+./main_cyclic ../cyclic_config.json 50
+
 ```
 
 After building, the executable will be available at:
