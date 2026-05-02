@@ -1,40 +1,42 @@
 {
-  "shape": [20, 20],
-  "wrapped": true,
-  "cells": {
-    "default": {
-      "delay": "inertial",
-      "cell_type": "cyclic",
-      "neighborhood": [
-        {
-          "type": "moore",
-          "range": 1,
-          "vicinity": 1
-        }
-      ],
-      "state": {
-        "phase": 0
+  "scenario": {
+    "shape": [20, 20],
+    "wrapped": true,
+    "cells": {
+      "default": {
+        "delay": "inertial",
+        "cell_type": "cyclic",
+        "neighborhood": [
+          {
+            "type": "moore",
+            "range": 1,
+            "vicinity": 1
+          }
+        ],
+        "state": {
+          "phase": 0
+        },
+        "config": 1
       },
-      "config": 1
-    },
-    "phase1_corners": {
-      "state": {
-        "phase": 1
+      "phase1_corners": {
+        "state": {
+          "phase": 1
+        }
+      },
+      "phase2_middle": {
+        "state": {
+          "phase": 2
+        }
       }
     },
-    "phase2_middle": {
-      "state": {
-        "phase": 2
-      }
+    "cell_map": {
+      "phase1_corners": [
+        [0, 0], [0, 1], [1, 0], [1, 1],
+        [18, 18], [18, 19], [19, 18], [19, 19]
+      ],
+      "phase2_middle": [
+        [9, 9], [9, 10], [10, 9], [10, 10]
+      ]
     }
-  },
-  "cell_map": {
-    "phase1_corners": [
-      [0, 0], [0, 1], [1, 0], [1, 1],
-      [18, 18], [18, 19], [19, 18], [19, 19]
-    ],
-    "phase2_middle": [
-      [9, 9], [9, 10], [10, 9], [10, 10]
-    ]
   }
 }

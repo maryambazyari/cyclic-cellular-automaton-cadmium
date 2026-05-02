@@ -1,64 +1,66 @@
-/**
- * SPDX-License-Identifier: MIT
- */
-
-#include <string>
-#include <fstream>
+#include <cadmium/celldevs/grid/coupled.hpp>
+#include <cadmium/core/logger/csv.hpp>
+#include <cadmium/core/simulation/root_coordinator.hpp>
+#include <chrono>
+#include <iostream>
 #include <memory>
+#include <string>
+#include "include/cyclic_grid_cell.hpp"
 
-#include <cadmium/modeling/dynamic_coupled.hpp>
-#include <cadmium/engine/pdevs_dynamic_runner.hpp>
-#include <cadmium/logger/common_loggers.hpp>
-
-#include "include/cyclic_coupled.hpp"
-
-using namespace std;
-using namespace cadmium;
+using namespace cadmium::celldevs;
 using namespace cadmium::celldevs::example::cyclic;
 
-using TIME = double;
-
-static ofstream out_messages("cyclic_grid_log.csv");
-
-struct oss_sink_messages {
-    static ostream& sink() {
-        return out_messages;
+std::shared_ptr<GridCell<cyclicState, double>> addGridCell(
+    const coordinates& cellId,
+    const std::shared_ptr<const GridCellConfig<cyclicState, double>>& cellConfig
+) {
+    auto cellModel = cellConfig->cellModel;
+    if (cellModel == "default" || cellModel == "cyclic") {
+        return std::make_shared<GridCyclicCell>(cellId, cellConfig);
+    } else {
+        throw std::bad_typeid();
     }
-};
+}
 
-using log_messages = logger::logger<
-    logger::logger_messages,
-    dynamic::logger::formatter<TIME>,
-    oss_sink_messages
->;
-
-using global_time_mes = logger::logger<
-    logger::logger_global_time,
-    dynamic::logger::formatter<TIME>,
-    oss_sink_messages
->;
-
-using logger_top = logger::multilogger<log_messages, global_time_mes>;
-
-int main(int argc, char** argv) {
+int main(int argc, char ** argv) {
     if (argc < 2) {
-        cout << "Program used with wrong parameters. The program must be invoked as follows:\n";
-        cout << argv[0] << " SCENARIO_CONFIG.json [MAX_SIMULATION_TIME (default: 50)]" << endl;
+        std::cout << "Usage: " << argv[0]
+                  << " SCENARIO_CONFIG.json [MAX_SIMULATION_TIME]" << std::endl;
         return -1;
     }
 
-    string configFilePath = argv[1];
-    TIME simTime = (argc > 2) ? stod(argv[2]) : 50.0;
+    std::string configFilePath = argv[1];
+    double simTime = (argc > 2) ? std::stod(argv[2]) : 50.0;
 
-    cyclic_coupled<TIME> test = cyclic_coupled<TIME>("cyclic");
-    test.add_lattice_json(configFilePath);
-    test.couple_cells();
+    auto paramsProcessed = std::chrono::high_resolution_clock::now();
 
-    shared_ptr<dynamic::modeling::coupled<TIME>> t = make_shared<cyclic_coupled<TIME>>(test);
+    auto model = std::make_shared<GridCellDEVSCoupled<cyclicState, double>>(
+        "cyclic", addGridCell, configFilePath
+    );
+    model->buildModel();
 
-    dynamic::engine::runner<TIME, logger_top> r(t, {0});
-    r.turn_progress_on();
-    r.run_until(simTime);
+    auto modelGenerated = std::chrono::high_resolution_clock::now();
+    std::cout << "Model creation time: "
+              << std::chrono::duration_cast<std::chrono::duration<double>>(modelGenerated - paramsProcessed).count()
+              << " seconds" << std::endl;
 
+    auto rootCoordinator = cadmium::RootCoordinator(model);
+    auto logger = std::make_shared<cadmium::CSVLogger>("cyclic_grid_log.csv", ";");
+    rootCoordinator.setLogger(logger);
+    rootCoordinator.start();
+
+    auto engineStarted = std::chrono::high_resolution_clock::now();
+    std::cout << "Engine creation time: "
+              << std::chrono::duration_cast<std::chrono::duration<double>>(engineStarted - modelGenerated).count()
+              << " seconds" << std::endl;
+
+    rootCoordinator.simulate(simTime);
+
+    auto simulationDone = std::chrono::high_resolution_clock::now();
+    std::cout << "Simulation time: "
+              << std::chrono::duration_cast<std::chrono::duration<double>>(simulationDone - engineStarted).count()
+              << " seconds" << std::endl;
+
+    rootCoordinator.stop();
     return 0;
 }

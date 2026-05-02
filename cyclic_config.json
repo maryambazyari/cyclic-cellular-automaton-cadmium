@@ -1,42 +1,44 @@
 {
-  "shape": [20, 20],
-  "wrapped": false,
-  "cells": {
-    "default": {
-      "delay": "inertial",
-      "cell_type": "cyclic",
-      "neighborhood": [
-        {
-          "type": "moore",
-          "range": 1,
-          "vicinity": 1
-        }
-      ],
-      "state": {
-        "phase": 0
+  "scenario": {
+    "shape": [20, 20],
+    "wrapped": false,
+    "cells": {
+      "default": {
+        "delay": "inertial",
+        "cell_type": "cyclic",
+        "neighborhood": [
+          {
+            "type": "moore",
+            "range": 1,
+            "vicinity": 1
+          }
+        ],
+        "state": {
+          "phase": 0
+        },
+        "config": 1
       },
-      "config": 1
-    },
-    "phase1_patch": {
-      "state": {
-        "phase": 1
+      "phase1_patch": {
+        "state": {
+          "phase": 1
+        }
+      },
+      "phase2_patch": {
+        "state": {
+          "phase": 2
+        }
       }
     },
-    "phase2_patch": {
-      "state": {
-        "phase": 2
-      }
+    "cell_map": {
+      "phase1_patch": [
+        [8, 8], [8, 9], [8, 10],
+        [9, 8], [9, 9], [9, 10],
+        [10, 8], [10, 9], [10, 10]
+      ],
+      "phase2_patch": [
+        [4, 4], [4, 5], [5, 4], [5, 5],
+        [14, 14], [14, 15], [15, 14], [15, 15]
+      ]
     }
-  },
-  "cell_map": {
-    "phase1_patch": [
-      [8, 8], [8, 9], [8, 10],
-      [9, 8], [9, 9], [9, 10],
-      [10, 8], [10, 9], [10, 10]
-    ],
-    "phase2_patch": [
-      [4, 4], [4, 5], [5, 4], [5, 5],
-      [14, 14], [14, 15], [15, 14], [15, 15]
-    ]
   }
 }
