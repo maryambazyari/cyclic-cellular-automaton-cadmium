@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(main_cyclic main_cyclic.cpp)
 
-set(CADMIUM_V2_DIR "" CACHE PATH "Path to Cadmium v2 include directory")
-set(JSON_DIR "${CMAKE_SOURCE_DIR}/external" CACHE PATH "Path to nlohmann/json include directory")
-set(BOOST_DIR "" CACHE PATH "Path to Boost include directory")
+set(CADMIUM_V2_DIR "${CMAKE_SOURCE_DIR}/external/cadmium_v2/include")
+set(BOOST_DIR "${CMAKE_SOURCE_DIR}/external/boost")
+set(JSON_DIR "${CMAKE_SOURCE_DIR}/external")
 
 if(NOT CADMIUM_V2_DIR)
     message(FATAL_ERROR "Please set CADMIUM_V2_DIR to the Cadmium v2 include folder")
